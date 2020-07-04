@@ -28,3 +28,13 @@ pip install -r requirements.txt
 
 
 Voila, everything is in place and ready to be used.
+
+## Setting up database
+Product aggregator uses PostgreSQL backend. Just make sure Postgre is running on localhost. Now it's time to create new user account for our app. Depending on the environment these steps can be a bit different
+
+```
+psql -U postgres
+
+>>> CREATE ROLE product_aggregator WITH LOGIN;
+>>> CREATE DATABASE product_aggregator WITH OWNER product_aggregator;
+```
