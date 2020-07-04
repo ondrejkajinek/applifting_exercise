@@ -1,6 +1,4 @@
-"""
-Setup file for packaging Product aggregator
-"""
+"""Setup file for packaging Product aggregator."""
 
 # std
 
@@ -12,7 +10,7 @@ from product_aggregator import __version__
 
 
 def setup():
-    """Run setuptools setup"""
+    """Run setuptools setup."""
     setuptools.setup(
         name="product_aggregator",
         version=__version__,
