@@ -20,5 +20,4 @@ before_script:
     - psql -c 'CREATE ROLE product_aggregator WITH LOGIN;' -U postgres
     - psql -c 'ALTER USER product_aggregator CREATEDB;' -U postgres
 script:
-    - python manage.py migrate
     - tox
