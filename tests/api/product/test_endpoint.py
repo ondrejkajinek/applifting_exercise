@@ -2,7 +2,7 @@
 
 # third-party
 from django.urls import reverse
-import pytest
+import pytest   # pylint: disable=import-error
 
 
 @pytest.mark.django_db
