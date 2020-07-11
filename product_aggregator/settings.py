@@ -82,7 +82,10 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "product_aggregator",
         "USER": "product_aggregator",
-        "HOST": "127.0.0.1"
+        "HOST": "127.0.0.1",
+        "TEST": {
+            "NAME": "test_product_aggregator"
+        }
     }
 }
 

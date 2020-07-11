@@ -12,7 +12,12 @@ matrix:
         - env: TOXENV=pylint
         - env: TOXENV=flake
         - env: TOXENV=pydocstyle
+services:
+    - postgresql
 install:
     - pip install -r requirements_dev.txt
+before_script:
+    - psql -c 'CREATE ROLE product_aggregator WITH LOGIN;' -U postgres
+    - psql -c 'CREATE DATABASE test_product_aggregator WITH OWNER product_aggregator;' -U postgres
 script:
     - tox
