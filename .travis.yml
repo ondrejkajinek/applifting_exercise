@@ -12,6 +12,7 @@ matrix:
         - env: TOXENV=pylint
         - env: TOXENV=flake
         - env: TOXENV=pydocstyle
+        - env: TOXENV=coverage
 services:
     - postgresql
 install:
