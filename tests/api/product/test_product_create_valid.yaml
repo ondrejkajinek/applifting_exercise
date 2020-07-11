@@ -1,0 +1,8 @@
+-
+    input:
+        name: "This is a correct name"
+        description: "This is a correct description"
+
+    output:
+        name: "This is a correct name"
+        description: "This is a correct description"

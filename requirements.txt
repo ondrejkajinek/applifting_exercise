@@ -1,4 +1,6 @@
+cached_property
 django
+django-crontab
 djangorestframework
 psycopg2
 requests

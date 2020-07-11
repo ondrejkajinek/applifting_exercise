@@ -1,0 +1,85 @@
+-
+    input:
+        null
+    output:
+        []
+
+-
+    input:
+        -
+            name: "Test 1"
+            description: "Description 1"
+            offers: []
+    # does not have any prices
+    output:
+        []
+
+-
+    input:
+        -
+            name: "Test 2"
+            description: "Description 2"
+            offers:
+                -
+                    external_id: 1
+                    items_in_stock: 1000
+                    prices: []
+
+    # does not have any prices
+    output:
+        []
+
+-
+    input:
+        -
+            name: "Test 3"
+            description: "Description 3"
+            offers:
+                -
+                    external_id: 1
+                    items_in_stock: 1000
+                    prices: 
+                        -
+                            timestamp_from: 0
+                            timestamp_to: 123456789
+                            price: 12
+                        -
+                            timestamp_from: 123456789
+                            timestamp_to: null
+                            price: 13
+
+                -
+                    external_id: 2
+                    items_in_stock: 300
+                    prices:
+                        -
+                            timestamp_from: 0
+                            timestamp_to: 2147483647
+                            price: 12
+                        -
+                            timestamp_from: 2147483647
+                            timestamp_to: null
+                            price: 13
+                -
+                    external_id: 3
+                    items_in_stock: 0
+                    prices:
+                        -
+                            timestamp_from: 0
+                            timestamp_to: 2147483647
+                            price: 12
+
+    output:
+        -
+            name: "Test 3"
+            description: "Description 3"
+            offers:
+                -
+                    items_in_stock: 1000
+                    price: 13.0
+                -
+                    items_in_stock: 300
+                    price: 12.0
+                -
+                    items_in_stock: 0
+                    price: 12.0

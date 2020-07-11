@@ -1,0 +1,44 @@
+-
+    input:
+        id: 1
+        name: "Product no. 1"
+        description: "This is the best product in the whole universe and all surrounding cities."
+        offers:
+            -
+                external_id: 1
+                items_in_stock: 10
+                prices:
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 2147483647
+                        price: 11
+
+    output:
+        name: "Product no. 1"
+        description: "This is the best product in the whole universe and all surrounding cities."
+        offers:
+            -
+                items_in_stock: 10
+                price: 11
+
+-
+    input:
+        id: 42
+        name: "Product no. 42"
+        description: "This is actually The Answer to the Ultimate Question of Life, the Universe, and Everything"
+        offers:
+            -
+                external_id: 1
+                items_in_stock: 42
+                prices:
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 2147483647
+                        price: 4242
+    output:
+        name: "Product no. 42"
+        description: "This is actually The Answer to the Ultimate Question of Life, the Universe, and Everything"
+        offers:
+            -
+                items_in_stock: 42
+                price: 4242

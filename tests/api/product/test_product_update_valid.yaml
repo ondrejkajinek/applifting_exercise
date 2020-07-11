@@ -1,0 +1,30 @@
+-
+    input:
+        name: "This is original name"
+        description: "This is original description"
+    change:
+        name: "This is new name"
+    output:
+        name: "This is new name"
+        description: "This is original description"
+
+-
+    input:
+        name: "This is original name"
+        description: "This is original description"
+    change:
+        description: "This is new description"
+    output:
+        name: "This is original name"
+        description: "This is new description"
+
+-
+    input:
+        name: "This is original name"
+        description: "This is original description"
+    change:
+        name: "This is new name"
+        description: "This is new description"
+    output:
+        name: "This is new name"
+        description: "This is new description"

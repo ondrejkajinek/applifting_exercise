@@ -1,0 +1,9 @@
+-
+    input:
+        name: "This is original name"
+        description: "This is original description"
+    change:
+        name: ""
+    error:
+        name: 
+            - "This field may not be blank."

@@ -24,12 +24,17 @@ SECRET_KEY = 'cw6fm&sv+!bdys8pf-g2ifz+35$b=u-zu0f3wpt46#yd+@^um^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1"
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'api.product',
+    'app.offer_microservice_integration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -104,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Prague'
 
 USE_I18N = True
 
@@ -117,3 +122,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser'
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer'
+    ]
+}
+
+try:
+    OFFER_MICROSERVICE_URL = os.environ["OFFER_MS_URL"]
+except KeyError:
+    OFFER_MICROSERVICE_URL = \
+        "https://applifting-python-excercise-ms.herokuapp.com/api/v1"
+
+
+CRONJOBS = [
+    ('* * * * *', 'app.offer_microservice_integration.cron.update_offers')
+]
+CRONTAB_LOCK_JOBS = True
+CRON_LOG_FILES = {
+    "app.offer_microservice_integration":
+        "logs/offer_microservice_integration_cron.log"
+}

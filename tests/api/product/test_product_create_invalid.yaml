@@ -1,0 +1,66 @@
+-
+    input:
+        {}
+    error:
+        name:
+            - "This field is required."
+        description:
+            - "This field is required."
+
+-
+    input:
+        name: "This name is OK"
+    error:
+        description:
+            - "This field is required."
+
+-
+    input:
+        description: "This description is OK"
+    error:
+        name:
+            - "This field is required."
+
+-
+    input:
+        name: ""
+        description: ""
+    error:
+        name:
+            - "This field may not be blank."
+        description:
+            - "This field may not be blank."
+
+-
+    input:
+        name: "This is a correct name"
+        description: ""
+    error:
+        description:
+            - "This field may not be blank."
+
+-
+    input:
+        name: ""
+        description: "This is a correct description"
+    error:
+        name:
+            - "This field may not be blank."
+
+-
+    input:
+        description: ""
+    error:
+        name:
+            - "This field is required."
+        description:
+            - "This field may not be blank."
+
+-
+    input:
+        name: ""
+    error:
+        name:
+            - "This field may not be blank."
+        description:
+            - "This field is required."
