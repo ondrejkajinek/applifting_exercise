@@ -33,13 +33,7 @@ class OfferSerializer(serializers.ModelSerializer):
     def get_price(self, offer):
         """Get current price for Offer."""
         current_timestamp = timezone.now().timestamp()
-        return offer.prices.get(
-            (
-                Q(timestamp_to__isnull=True) |
-                Q(timestamp_to__gte=current_timestamp)
-            ),
-            timestamp_from__lte=current_timestamp
-        ).price
+        return offer.prices.current().price
 
 
 class ProductSerializer(serializers.ModelSerializer):
