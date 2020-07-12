@@ -91,7 +91,7 @@ class OfferViewSet(viewsets.GenericViewSet):
         offer = self.get_object()
         prices = (
             offer.prices
-            .filter(timestamp_from__lte=time_to)
+            .filter(timestamp_from__lt=time_to)
             .filter(
                 Q(timestamp_to__gte=time_from) |
                 Q(timestamp_to__isnull=True)
