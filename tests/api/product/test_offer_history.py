@@ -23,6 +23,19 @@ def test_offer_changes(test_data, product_factory, fix_structure, api_client):
 
 
 @pytest.mark.django_db
+def test_offer_changes_invalid(
+        test_data, product_factory, api_client
+):
+    """Retrieve existing offer changes with invalid params."""
+    product = product_factory(test_data["input"])
+    offer = product.offers.first()
+    url = reverse("offer-changes", kwargs={"pk": offer.id})
+    url += "?" + urllib.parse.urlencode(test_data["query_params"])
+    api_response = api_client.get(url)
+    assert api_response.status_code == 400
+
+
+@pytest.mark.django_db
 def test_offer_changes_not_found(api_client):
     """Retrieve non-existing offer changes."""
     api_response = api_client.get(

@@ -1,0 +1,27 @@
+-
+    input:
+        name: "N"
+        description: "D"
+        offers:
+            -
+                external_id: 1
+                items_in_stock: 1000
+                prices: 
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 100
+                        price: 100
+                    -
+                        timestamp_from: 100
+                        timestamp_to: 200
+                        price: 80
+                    -
+                        timestamp_from: 200
+                        timestamp_to: 500
+                        price: 130
+                    -
+                        timestamp_from: 500
+                        timestamp_to: null
+                        price: 145
+    query_params:
+        time_from: "this has to fail"
