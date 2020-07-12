@@ -1,5 +1,4 @@
 [![Travis](https://travis-ci.com/ondrejkajinek/applifting_exercise.svg?branch=master)](https://travis-ci.com/ondrejkajinek/applifting_exercise)
-
 [![codecov](https://codecov.io/gh/ondrejkajinek/applifting_exercise/branch/master/graph/badge.svg)](https://codecov.io/gh/ondrejkajinek/applifting_exercise)
 
 # Applifting exercise
