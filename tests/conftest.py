@@ -130,10 +130,15 @@ def pytest_generate_tests(metafunc):
 
 def _load_function_test_data(metafunc):
     module_dirs = metafunc.function.__module__.split(".")[:-1]
+    try:
+        source_name = metafunc.function.data_source
+    except AttributeError:
+        source_name = metafunc.function.__name__
+
     data_source_path = (
         pathlib.Path.cwd()
         .joinpath(*module_dirs)
-        .joinpath("{}.yaml".format(metafunc.function.__name__))
+        .joinpath("{}.yaml".format(source_name))
     )
     with open(str(data_source_path)) as data_source:
         return yaml.safe_load(data_source.read())
