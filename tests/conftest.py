@@ -13,6 +13,7 @@ import pytest   # pylint: disable=import-error
 
 # local
 from api.product.models import Offer, Price, Product
+from app.offer_microservice_integration.client import OfferMicroserviceClient
 from app.offer_microservice_integration.signals import register_product
 
 
@@ -51,6 +52,12 @@ def api_client():
 
 
 @pytest.fixture
+def fake_token():
+    """Get dummy auth token for Offer microservice API."""
+    return "this_is_fake_token"
+
+
+@pytest.fixture
 def fix_structure():
     """Create method to fix data structure."""
 
@@ -71,6 +78,12 @@ def fix_structure():
         return data
 
     return fixer
+
+
+@pytest.fixture
+def oms_client():
+    """Create OfferMicroserviceClient."""
+    return OfferMicroserviceClient()
 
 
 @pytest.fixture

@@ -1,0 +1,9 @@
+-
+    -
+        id: 1
+        price: 1000
+        items_in_stock: 5
+    -
+        id: 2
+        price: 123
+        items_in_stock: 23
