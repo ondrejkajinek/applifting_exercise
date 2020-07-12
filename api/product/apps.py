@@ -7,4 +7,4 @@ from django.apps import AppConfig
 class ProductConfig(AppConfig):
     """Django app for Product API."""
 
-    name = 'product'
+    name = 'api.product'

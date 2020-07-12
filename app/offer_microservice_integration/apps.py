@@ -4,7 +4,11 @@
 from django.apps import AppConfig
 
 
-class OfferMicroserviceIntegrationConfig(AppConfig):
+class MicroserviceIntegrationConfig(AppConfig):
     """Django app for Offer microservice integration."""
 
-    name = 'offer_microservice_integration'
+    name = 'app.offer_microservice_integration'
+
+    def ready(self):
+        super().ready()
+        from . import signals

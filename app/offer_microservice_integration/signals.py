@@ -2,14 +2,12 @@
 
 # third-party
 from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 # local
 from api.product.models import Product
 from .client import OfferMicroserviceClient
 
 
-@receiver(post_save, sender=Product)
 def register_product(instance, created, **kwargs):
     """Register product to Offer microservice."""
     if not created:
@@ -17,3 +15,10 @@ def register_product(instance, created, **kwargs):
 
     client = OfferMicroserviceClient()
     client.register_product(instance)
+
+
+post_save.connect(
+    register_product,
+    sender=Product,
+    dispatch_uid="app.offer_microservice_integration.register_product"
+)
