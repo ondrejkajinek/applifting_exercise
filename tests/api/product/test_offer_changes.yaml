@@ -6,7 +6,7 @@
             -
                 external_id: 1
                 items_in_stock: 1000
-                prices: 
+                prices:
                     -
                         timestamp_from: 0
                         timestamp_to: 100
@@ -40,4 +40,127 @@
         -
             timestamp_from: 0
             timestamp_to: 100
+            price: 0.0
+
+-
+    input:
+        name: "N"
+        description: "D"
+        offers:
+            -
+                external_id: 1
+                items_in_stock: 1000
+                prices:
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 100
+                        price: 80
+                    -
+                        timestamp_from: 100
+                        timestamp_to: 200
+                        price: 100
+                    -
+                        timestamp_from: 200
+                        timestamp_to: 500
+                        price: 130
+                    -
+                        timestamp_from: 500
+                        timestamp_to: null
+                        price: 145
+    query_params:
+        time_from: 150
+    # price is sorted by timestamp_from descending
+    output:
+        -
+            timestamp_from: 500
+            timestamp_to: null
+            price: 0.45
+        -
+            timestamp_from: 200
+            timestamp_to: 500
+            price: 0.3
+        -
+            timestamp_from: 100
+            timestamp_to: 200
+            price: 0.0
+
+-
+    input:
+        name: "N"
+        description: "D"
+        offers:
+            -
+                external_id: 1
+                items_in_stock: 1000
+                prices:
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 100
+                        price: 100
+                    -
+                        timestamp_from: 100
+                        timestamp_to: 200
+                        price: 80
+                    -
+                        timestamp_from: 200
+                        timestamp_to: 500
+                        price: 130
+                    -
+                        timestamp_from: 500
+                        timestamp_to: null
+                        price: 145
+    query_params:
+        time_to: 300
+    # price is sorted by timestamp_from descending
+    output:
+        -
+            timestamp_from: 200
+            timestamp_to: 500
+            price: 0.3
+        -
+            timestamp_from: 100
+            timestamp_to: 200
+            price: -0.2
+        -
+            timestamp_from: 0
+            timestamp_to: 100
+            price: 0.0
+
+-
+    input:
+        name: "N"
+        description: "D"
+        offers:
+            -
+                external_id: 1
+                items_in_stock: 1000
+                prices:
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 100
+                        price: 60
+                    -
+                        timestamp_from: 100
+                        timestamp_to: 200
+                        price: 100
+                    -
+                        timestamp_from: 200
+                        timestamp_to: 500
+                        price: 130
+                    -
+                        timestamp_from: 500
+                        timestamp_to: null
+                        price: 145
+    query_params:
+        time_from: 120
+        time_to: 500
+    # price is sorted by timestamp_from descending
+    output:
+        -
+            timestamp_from: 200
+            timestamp_to: 500
+            price: 0.3
+        -
+            timestamp_from: 100
+            timestamp_to: 200
             price: 0.0

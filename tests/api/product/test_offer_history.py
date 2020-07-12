@@ -1,5 +1,8 @@
 """Test suite for PUT /api/offer/{pk}/history endpoint."""
 
+# std
+import urllib
+
 # third-party
 from django.urls import reverse
 import pytest   # pylint: disable=import-error
@@ -10,12 +13,12 @@ def test_offer_changes(test_data, product_factory, fix_structure, api_client):
     """Retrieve existing offer changes."""
     product = product_factory(test_data["input"])
     offer = product.offers.first()
-    api_response = api_client.get(
-        reverse("offer-changes", kwargs={"pk": offer.id})
-    )
+    url = reverse("offer-changes", kwargs={"pk": offer.id})
+    if test_data.get("query_params"):
+        url += "?" + urllib.parse.urlencode(test_data["query_params"])
+
+    api_response = api_client.get(url)
     assert api_response.status_code == 200
-    print(api_response.data)
-    print(test_data["output"])
     assert fix_structure(api_response.data) == test_data["output"]
 
 
