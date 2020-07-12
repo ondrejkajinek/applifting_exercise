@@ -64,7 +64,7 @@ def _update_offer(offer):
         offer.save()
 
         try:
-            current_price = offer.prices.get(timestamp_to__isnull=True)
+            current_price = offer.prices.current()
         # no active price, this should not happen
         except Price.DoesNotExist:
             max_timestamp_to = (

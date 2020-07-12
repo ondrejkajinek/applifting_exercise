@@ -2,6 +2,7 @@
 
 # third-party
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -27,6 +28,22 @@ class OfferManager(models.Manager):
         return (
             self.get_queryset()
             .prefetch_related("prices")
+        )
+
+
+class PriceManager(models.Manager):
+    """Manager for Price."""
+
+    def current(self):
+        """Find currently active price."""
+        now = timezone.now().timestamp()
+        return (
+            self.get_queryset()
+            .filter(
+                models.Q(timestamp_to__isnull=True) |
+                models.Q(timestamp_to__gte=now)
+            )
+            .get(timestamp_from__lt=now)
         )
 
 
@@ -91,6 +108,8 @@ class Price(models.Model):
         on_delete=models.CASCADE,
         related_name="prices"
     )
+
+    objects = PriceManager()
 
     class Meta:     # pylint: disable=too-few-public-methods
         """Model configuration."""
