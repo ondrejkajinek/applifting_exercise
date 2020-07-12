@@ -9,7 +9,7 @@ import pytest   # pylint: disable=import-error
 def test_product_retrieve(
         test_data, product_factory, fix_structure, api_client
 ):
-    """Test retrieving existing products."""
+    """Retrieve existing product."""
     product = product_factory(test_data["input"])
     api_response = api_client.get(
         reverse("product-detail", kwargs={"pk": product.id})
@@ -20,7 +20,7 @@ def test_product_retrieve(
 
 @pytest.mark.django_db
 def test_product_retrieve_not_found(api_client):
-    """Test retrieving nonexisting products."""
+    """Retrieve nonexisting product."""
     api_response = api_client.get(
         reverse("product-detail", kwargs={"pk": 1})
     )

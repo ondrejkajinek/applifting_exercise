@@ -13,6 +13,6 @@ import pytest   # pylint: disable=import-error
     ]
 )
 def test_unauthorized_request(url, api_client):
-    """Test unauthorized access to enpoints."""
+    """Make unauthorized request to enpoint."""
     response = api_client.get(reverse(url))
     assert response.status_code == 200

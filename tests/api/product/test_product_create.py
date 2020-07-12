@@ -9,7 +9,7 @@ from api.product.models import Product
 
 
 def test_product_create_invalid(test_data, api_client):
-    """Test failing product creation."""
+    """Create product with invalid data."""
     api_response = api_client.post(
         reverse("product-list"), test_data["input"], format="json"
     )
@@ -19,7 +19,7 @@ def test_product_create_invalid(test_data, api_client):
 
 @pytest.mark.django_db
 def test_product_create_valid(test_data, api_client):
-    """Test successful product creation."""
+    """Create product with valid data."""
     api_response = api_client.post(
         reverse("product-list"), test_data["input"], format="json"
     )

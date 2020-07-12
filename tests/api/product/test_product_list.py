@@ -7,7 +7,7 @@ import pytest   # pylint: disable=import-error
 
 @pytest.mark.django_db
 def test_product_list(test_data, product_factory, fix_structure, api_client):
-    """Test products listing."""
+    """List products."""
     if test_data["input"]:
         for product in test_data["input"]:
             product_factory(product)

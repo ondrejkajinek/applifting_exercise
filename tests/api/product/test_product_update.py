@@ -10,7 +10,7 @@ from api.product.models import Product
 
 @pytest.mark.django_db
 def test_product_update_not_found(api_client):
-    """Test updating non-existing product."""
+    """Update non-existing product."""
     api_response = api_client.put(
         reverse("product-detail", kwargs={"pk": 1}),
         {},
@@ -21,7 +21,7 @@ def test_product_update_not_found(api_client):
 
 @pytest.mark.django_db
 def test_product_update_invalid(test_data, fix_structure, api_client):
-    """Test failing product update."""
+    """Update existing product with invalid data."""
     product = Product.objects.create(**test_data["input"])
     api_response = api_client.put(
         reverse("product-detail", kwargs={"pk": product.id}),
@@ -34,7 +34,7 @@ def test_product_update_invalid(test_data, fix_structure, api_client):
 
 @pytest.mark.django_db
 def test_product_update_valid(test_data, api_client):
-    """Test successful product update."""
+    """Update existing product with valid data."""
     product = Product.objects.create(**test_data["input"])
     api_response = api_client.put(
         reverse("product-detail", kwargs={"pk": product.id}),
