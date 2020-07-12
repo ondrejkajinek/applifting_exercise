@@ -1,9 +1,9 @@
 """Modul with Offer microservice exceptions."""
 
 
-class BaseOMIException(BaseException):
+class BaseOMSException(BaseException):
     """Base class for exceptions."""
 
 
-class MissingAPIToken(BaseOMIException):
+class MissingApiKey(BaseOMSException):
     """Raised when API token cannot be obtained."""

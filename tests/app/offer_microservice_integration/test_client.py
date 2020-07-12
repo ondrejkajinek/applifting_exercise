@@ -8,7 +8,7 @@ import pytest   # pylint: disable=import-error
 
 # local
 from app.offer_microservice_integration import client
-from app.offer_microservice_integration.exceptions import MissingAPIToken
+from app.offer_microservice_integration.exceptions import MissingApiKey
 
 
 @pytest.mark.django_db
@@ -32,7 +32,7 @@ def test_request_token_failed(oms_client):
         mock_request_get.return_value = mock.Mock(
             status_code=500
         )
-        with pytest.raises(MissingAPIToken):
+        with pytest.raises(MissingApiKey):
             print(oms_client.api_key)
 
     with mock.patch.object(client.requests, "get") as mock_request_get:
@@ -42,7 +42,7 @@ def test_request_token_failed(oms_client):
             "text": message,
             "json.return_value": message
         })
-        with pytest.raises(MissingAPIToken):
+        with pytest.raises(MissingApiKey):
             print(oms_client.api_key)
 
 

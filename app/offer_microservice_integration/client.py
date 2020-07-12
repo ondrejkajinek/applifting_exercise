@@ -10,7 +10,7 @@ from cached_property import cached_property
 from django.conf import settings
 
 # local
-from .exceptions import MissingAPIToken
+from .exceptions import MissingApiKey
 from .models import Configuration
 
 
@@ -113,7 +113,7 @@ class OfferMicroserviceClient:
             return resp.json()["access_token"]
         except (KeyError, ValueError):
             log.error("Bad response from Offer MS API: %r", resp.text)
-            raise MissingAPIToken("Unexpected response from service")
+            raise MissingApiKey("Unexpected response from service")
         except requests.exceptions.HTTPError:
             log.exception("Failed to request auth token")
-            raise MissingAPIToken("Auth request failed")
+            raise MissingApiKey("Auth request failed")
