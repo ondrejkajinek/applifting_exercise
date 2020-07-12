@@ -11,8 +11,11 @@ jobs:
         - python: 3.8
           env: TOXENV=py38
         - env: TOXENV=pylint
+          after_success:
         - env: TOXENV=flake
+          after_success:
         - env: TOXENV=pydocstyle
+          after_success:
 services:
     - postgresql
 install:
@@ -23,5 +26,4 @@ before_script:
 script:
     - tox
 after_success:
-    - tox -e coverage-report
     - codecov
