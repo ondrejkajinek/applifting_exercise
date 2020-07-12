@@ -1,0 +1,43 @@
+-
+    input:
+        name: "N"
+        description: "D"
+        offers:
+            -
+                external_id: 1
+                items_in_stock: 1000
+                prices: 
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 100
+                        price: 12
+                    -
+                        timestamp_from: 100
+                        timestamp_to: 200
+                        price: 13
+                    -
+                        timestamp_from: 200
+                        timestamp_to: 500
+                        price: 15
+                    -
+                        timestamp_from: 500
+                        timestamp_to: null
+                        price: 20
+    # price is sorted by timestamp_from descending
+    output:
+        -
+            timestamp_from: 500
+            timestamp_to: null
+            price: 20.0
+        -
+            timestamp_from: 200
+            timestamp_to: 500
+            price: 15.0
+        -
+            timestamp_from: 100
+            timestamp_to: 200
+            price: 13.0
+        -
+            timestamp_from: 0
+            timestamp_to: 100
+            price: 12.0
