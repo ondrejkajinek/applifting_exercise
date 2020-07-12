@@ -3,6 +3,7 @@
 # third-party
 # from django.http import JsonResponse, Http404
 from django.http import Http404
+from django.db.models import Q
 from django.utils import timezone
 from rest_framework import decorators, status, viewsets
 from rest_framework.response import Response
@@ -93,12 +94,15 @@ class OfferViewSet(viewsets.GenericViewSet):
         offer = self.get_object()
         prices = (
             offer.prices
-            .filter(timestamp_to__gte=time_from)
             .filter(timestamp_from__lte=time_to)
+            .filter(
+                Q(timestamp_to__gte=time_from) |
+                Q(timestamp_to__isnull=True)
+            )
         )
-        base_price = prices[0].price
+        base_price = prices.last().price
         for price in prices:
-            price.price = price.price / base_price - 1
+            price.price = (price.price - base_price) / base_price
 
         serializer = self.get_serializer(prices, many=True)
         return Response(serializer.data)

@@ -12,14 +12,11 @@ from .models import Offer, Price, Product
 class PriceSerializer(serializers.ModelSerializer):
     """Serializer for Price entity."""
 
-    time_from = serializers.SerializerMethodField()
-    time_to = serializers.SerializerMethodField()
-
     class Meta:     # pylint: disable=too-few-public-methods
         """Serializer configuration."""
 
         model = Price
-        fields = ["price", "time_from", "time_to"]
+        fields = ["price", "timestamp_from", "timestamp_to"]
 
 
 class OfferSerializer(serializers.ModelSerializer):
