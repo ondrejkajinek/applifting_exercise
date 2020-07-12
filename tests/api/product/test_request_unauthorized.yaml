@@ -1,0 +1,39 @@
+-
+    method: "get"
+    route: "product-list"
+    route_args: {}
+
+-
+    method: "post"
+    route: "product-list"
+    route_args: {}
+
+-
+    method: "get"
+    route: "product-detail"
+    route_args:
+        pk: 1
+
+-
+    method: "put"
+    route: "product-detail"
+    route_args:
+        pk: 1
+
+-
+    method: "delete"
+    route: "product-detail"
+    route_args:
+        pk: 1
+
+-
+    method: "get"
+    route: "offer-history"
+    route_args:
+        pk: 1
+
+-
+    method: "get"
+    route: "offer-changes"
+    route_args:
+        pk: 1

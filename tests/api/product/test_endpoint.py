@@ -6,13 +6,8 @@ import pytest   # pylint: disable=import-error
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "url",
-    [
-        "product-list"
-    ]
-)
-def test_unauthorized_request(url, api_client):
-    """Make unauthorized request to enpoint."""
-    response = api_client.get(reverse(url))
-    assert response.status_code == 200
+def test_request_unauthorized(test_data, api_client):
+    """Make unauthorized request to product enpoint."""
+    url = reverse(test_data["route"], kwargs=test_data["route_args"])
+    response = getattr(api_client, test_data["method"])(url)
+    assert response.status_code != 403
