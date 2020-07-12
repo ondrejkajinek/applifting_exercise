@@ -66,7 +66,6 @@ class OfferViewSet(viewsets.GenericViewSet):
     def history(self, request, pk=None):
         """Handle for GET /api/price/history/."""
         offer = self.get_object()
-        # offer = self._get_offer(pk)
         prices = offer.prices.all()
         serializer = self.get_serializer(prices, many=True)
         return Response(serializer.data)
@@ -82,7 +81,6 @@ class OfferViewSet(viewsets.GenericViewSet):
             )
         except ValueError:
             return Response(
-            # return JsonResponse(
                 {
                     "time_from": "Timestamp expected",
                     "time_to": "Timestamp expected"
@@ -90,7 +88,6 @@ class OfferViewSet(viewsets.GenericViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # offer = self._get_offer(pk)
         offer = self.get_object()
         prices = (
             offer.prices
@@ -106,11 +103,3 @@ class OfferViewSet(viewsets.GenericViewSet):
 
         serializer = self.get_serializer(prices, many=True)
         return Response(serializer.data)
-
-    """
-    def _get_offer(self, ident):
-        try:
-            return Offer.objects.prefetched().get(pk=ident)
-        except Offer.DoesNotExist:
-            raise Http404
-    """
