@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     'api.product.apps.ProductConfig',
     'app.offer_microservice_integration.apps.MicroserviceIntegrationConfig',
     'django.contrib.admin',
