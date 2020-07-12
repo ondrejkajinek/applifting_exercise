@@ -18,7 +18,6 @@ log = logging.getLogger("app.offer_microservice_integration.utils")
 
 
 EXCEPTIONS = {
-    201: None,
     400: RuntimeError,
     401: RuntimeError,
     404: RuntimeError
@@ -107,8 +106,6 @@ class OfferMicroserviceClient:
         return Configuration.objects.get(key=self.TOKEN_KEY).value
 
     def _request_auth_token(self):
-        print("Requesting api key")
-        raise RuntimeError("I wanna break it")
         url = urllib.parse.urljoin(settings.OFFER_MICROSERVICE_URL, "/auth")
         resp = requests.post(url)
         try:
