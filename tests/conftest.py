@@ -95,7 +95,7 @@ def product_factory():
 # OndraK: use fixtures product_factory and no_product_register
 # pylint: disable=redefined-outer-name
 def product_factory_no_register(product_factory, no_product_register):
-# pylint: enable=redefined-outer-name
+    # pylint: enable=redefined-outer-name
     """Create factory for full Product with register_product signal muted."""
 
     def factory(product_data):
