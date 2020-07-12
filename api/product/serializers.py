@@ -19,6 +19,22 @@ class PriceSerializer(serializers.ModelSerializer):
         fields = ["price", "timestamp_from", "timestamp_to"]
 
 
+class PriceChangeSerializer(serializers.ModelSerializer):
+    """Serializer for Price change entity."""
+
+    change = serializers.SerializerMethodField()
+
+    class Meta(PriceSerializer.Meta):
+        """Serializer configuration."""
+
+        model = Price
+        fields = ["change", "timestamp_from", "timestamp_to"]
+
+    def get_change(self, price):
+        """Get relative price change."""
+        return (price.price - price.base_price) / price.base_price
+
+
 class OfferSerializer(serializers.ModelSerializer):
     """Serializer for Offer entity, selecting only active price."""
 

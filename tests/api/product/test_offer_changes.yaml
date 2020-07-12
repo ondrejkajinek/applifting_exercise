@@ -28,19 +28,19 @@
         -
             timestamp_from: 500
             timestamp_to: null
-            price: 0.45
+            change: 0.45
         -
             timestamp_from: 200
             timestamp_to: 500
-            price: 0.3
+            change: 0.3
         -
             timestamp_from: 100
             timestamp_to: 200
-            price: -0.2
+            change: -0.2
         -
             timestamp_from: 0
             timestamp_to: 100
-            price: 0.0
+            change: 0.0
 
 -
     input:
@@ -74,15 +74,15 @@
         -
             timestamp_from: 500
             timestamp_to: null
-            price: 0.45
+            change: 0.45
         -
             timestamp_from: 200
             timestamp_to: 500
-            price: 0.3
+            change: 0.3
         -
             timestamp_from: 100
             timestamp_to: 200
-            price: 0.0
+            change: 0.0
 
 -
     input:
@@ -116,15 +116,15 @@
         -
             timestamp_from: 200
             timestamp_to: 500
-            price: 0.3
+            change: 0.3
         -
             timestamp_from: 100
             timestamp_to: 200
-            price: -0.2
+            change: -0.2
         -
             timestamp_from: 0
             timestamp_to: 100
-            price: 0.0
+            change: 0.0
 
 -
     input:
@@ -159,8 +159,8 @@
         -
             timestamp_from: 200
             timestamp_to: 500
-            price: 0.3
+            change: 0.3
         -
             timestamp_from: 100
             timestamp_to: 200
-            price: 0.0
+            change: 0.0

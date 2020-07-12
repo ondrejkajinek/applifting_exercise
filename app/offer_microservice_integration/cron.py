@@ -18,10 +18,6 @@ log = setup_cron_logger(
 )
 
 
-# cca 0.001, but precisely
-PRICE_PRECISION = 1 / 1024
-
-
 def update_offers():
     """Update stock count and price for all offers, get new offers."""
     client = OfferMicroserviceClient()
@@ -78,7 +74,7 @@ def _update_offer(offer):
                 offer=offer
             )
         else:
-            if abs(current_price.price - offer["price"]) > PRICE_PRECISION:
+            if current_price.price != offer["price"]:
                 # stop old price
                 current_timestamp = int(timezone.now().timestamp())
                 current_price.timestamp_to = current_timestamp

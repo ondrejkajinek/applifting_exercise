@@ -100,7 +100,7 @@ class Price(models.Model):
         verbose_name=_("Timestamp to, exclusive"),
         null=True
     )
-    price = models.FloatField(
+    price = models.PositiveIntegerField(
         verbose_name=_("Price")
     )
     offer = models.ForeignKey(
@@ -118,4 +118,4 @@ class Price(models.Model):
 
     def __str__(self):
         """Create printable representation of Price."""
-        return "{} price: {:0.2f}".format(self.offer, self.price)
+        return "{} price: {:d}".format(self.offer, self.price)

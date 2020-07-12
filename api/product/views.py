@@ -9,8 +9,9 @@ from rest_framework import decorators, status, viewsets
 from rest_framework.response import Response
 
 # local
-from api.product.models import Offer, Product
-from api.product.serializers import PriceSerializer, ProductSerializer
+from .models import Offer, Product
+from .serializers import PriceChangeSerializer, PriceSerializer
+from .serializers import ProductSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -99,7 +100,7 @@ class OfferViewSet(viewsets.GenericViewSet):
         )
         base_price = prices.last().price
         for price in prices:
-            price.price = (price.price - base_price) / base_price
+            price.base_price = base_price
 
-        serializer = self.get_serializer(prices, many=True)
+        serializer = PriceChangeSerializer(prices, many=True)
         return Response(serializer.data)
