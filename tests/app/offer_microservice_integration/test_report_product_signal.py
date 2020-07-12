@@ -25,7 +25,11 @@ def test_product_create_reported(mock_register, test_data, api_client):
     assert api_response.status_code == 201
     product_id = api_response.data["id"]
     product = Product.objects.get(pk=product_id)
-    mock_register.assert_called_once()
+    try:
+        mock_register.assert_called_once()
+    except AttributeError:
+        assert mock_register.call_count == 1
+
     mock_register.assert_called_with(product)
 
 

@@ -19,7 +19,10 @@ def test_auth_token(mock_request_token, fake_token, oms_client):
     for _ in range(10):
         assert oms_client.api_key == fake_token
 
-    mock_request_token.assert_called_once()
+    try:
+        mock_request_token.assert_called_once()
+    except AttributeError:
+        assert mock_request_token.call_count == 1
 
 
 @pytest.mark.django_db
@@ -58,7 +61,10 @@ def test_api_key_accessed_once(
     })
     mock_api_key.return_value = fake_token
     oms_client.product_offers(1)
-    mock_api_key.assert_called_once()
+    try:
+        mock_api_key.assert_called_once()
+    except AttributeError:
+        assert mock_api_key.call_count == 1
 
 
 @mock.patch.object(
