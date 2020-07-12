@@ -10,5 +10,6 @@ class MicroserviceIntegrationConfig(AppConfig):
     name = 'app.offer_microservice_integration'
 
     def ready(self):
+        """Import app signals."""
         super().ready()
         from . import signals
