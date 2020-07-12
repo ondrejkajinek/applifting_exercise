@@ -7,10 +7,13 @@ import pytest   # pylint: disable=import-error
 
 @pytest.mark.django_db
 def test_product_retrieve(
-        test_data, product_factory, fix_structure, api_client
+        test_data, product_factory, fix_structure, no_product_register,
+        api_client
 ):
     """Retrieve existing product."""
-    product = product_factory(test_data["input"])
+    with no_product_register():
+        product = product_factory(test_data["input"])
+
     api_response = api_client.get(
         reverse("product-detail", kwargs={"pk": product.id})
     )

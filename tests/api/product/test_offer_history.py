@@ -9,9 +9,14 @@ import pytest   # pylint: disable=import-error
 
 
 @pytest.mark.django_db
-def test_offer_changes(test_data, product_factory, fix_structure, api_client):
+def test_offer_changes(
+        test_data, product_factory, fix_structure, no_product_register,
+        api_client
+):
     """Retrieve existing offer changes."""
-    product = product_factory(test_data["input"])
+    with no_product_register():
+        product = product_factory(test_data["input"])
+
     offer = product.offers.first()
     url = reverse("offer-changes", kwargs={"pk": offer.id})
     if test_data.get("query_params"):
@@ -24,10 +29,12 @@ def test_offer_changes(test_data, product_factory, fix_structure, api_client):
 
 @pytest.mark.django_db
 def test_offer_changes_invalid(
-        test_data, product_factory, api_client
+        test_data, product_factory, no_product_register, api_client
 ):
     """Retrieve existing offer changes with invalid params."""
-    product = product_factory(test_data["input"])
+    with no_product_register():
+        product = product_factory(test_data["input"])
+
     offer = product.offers.first()
     url = reverse("offer-changes", kwargs={"pk": offer.id})
     url += "?" + urllib.parse.urlencode(test_data["query_params"])
@@ -45,9 +52,14 @@ def test_offer_changes_not_found(api_client):
 
 
 @pytest.mark.django_db
-def test_offer_history(test_data, product_factory, fix_structure, api_client):
+def test_offer_history(
+        test_data, product_factory, fix_structure, no_product_register,
+        api_client
+):
     """Retrieve existing offer history."""
-    product = product_factory(test_data["input"])
+    with no_product_register():
+        product = product_factory(test_data["input"])
+
     offer = product.offers.first()
     api_response = api_client.get(
         reverse("offer-history", kwargs={"pk": offer.id})

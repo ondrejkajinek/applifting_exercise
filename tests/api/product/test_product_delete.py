@@ -18,9 +18,11 @@ def test_product_delete_not_found(api_client):
 
 
 @pytest.mark.django_db
-def test_product_delete_valid(test_data, api_client):
+def test_product_delete_valid(test_data, no_product_register, api_client):
     """Delete existing product."""
-    product = Product.objects.create(**test_data["input"])
+    with no_product_register():
+        product = Product.objects.create(**test_data["input"])
+
     api_response = api_client.delete(
         reverse("product-detail", kwargs={"pk": product.id})
     )

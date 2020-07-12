@@ -5,9 +5,11 @@ import pytest   # pylint: disable=import-error
 
 
 @pytest.mark.django_db
-def test_product_str(test_data, product_factory):
+def test_product_str(test_data, no_product_register, product_factory):
     """Test Product.__str__."""
-    product = product_factory(test_data["input"])
+    with no_product_register():
+        product = product_factory(test_data["input"])
+
     assert str(product) == test_data["output"]["product"]["str"]
     offers = product.offers.all()
     for offer, expected_offer in zip(offers, test_data["output"]["offers"]):

@@ -18,11 +18,13 @@ def test_product_create_invalid(test_data, api_client):
 
 
 @pytest.mark.django_db
-def test_product_create_valid(test_data, api_client):
+def test_product_create_valid(test_data, no_product_register, api_client):
     """Create product with valid data."""
-    api_response = api_client.post(
-        reverse("product-list"), test_data["input"], format="json"
-    )
+    with no_product_register():
+        api_response = api_client.post(
+            reverse("product-list"), test_data["input"], format="json"
+        )
+
     assert api_response.status_code == 201
     product_id = api_response.data["id"]
     product = Product.objects.get(pk=product_id)

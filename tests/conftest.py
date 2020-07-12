@@ -5,6 +5,7 @@ import collections
 import pathlib
 
 # thid-party
+from django.db.models.signals import post_save
 from rest_framework.exceptions import ErrorDetail
 from rest_framework.test import APIClient
 import yaml     # pylint: disable=import-error
@@ -12,6 +13,35 @@ import pytest   # pylint: disable=import-error
 
 # local
 from api.product.models import Offer, Price, Product
+from app.offer_microservice_integration.signals import register_product
+
+
+class SignalMuter:
+    """Context manager for temporary signal disconnection."""
+
+    def __init__(self, signal, receiver, sender, dispatch_uid=None):
+        """Signal muter initialization."""
+        self.signal = signal
+        self.receiver = receiver
+        self.sender = sender
+        self.dispatch_uid = dispatch_uid
+
+    def __enter__(self):
+        """Disconnect selected signal."""
+        self.signal.disconnect(
+            receiver=self.receiver,
+            sender=self.sender,
+            dispatch_uid=self.dispatch_uid,
+        )
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """Re-connect signal upon context destruction."""
+        self.signal.connect(
+            receiver=self.receiver,
+            sender=self.sender,
+            dispatch_uid=self.dispatch_uid,
+            weak=False
+        )
 
 
 @pytest.fixture
@@ -57,6 +87,21 @@ def product_factory():
                 Price.objects.create(offer=offer, **price_data)
 
         return product
+
+    return factory
+
+
+@pytest.fixture
+def no_product_register():
+    """Return factory for SignalMuter."""
+
+    def factory():
+        return SignalMuter(
+            signal=post_save,
+            receiver=register_product,
+            sender=Product,
+            dispatch_uid="app.offer_microservice_integration.register_product"
+        )
 
     return factory
 

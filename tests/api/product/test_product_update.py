@@ -20,9 +20,13 @@ def test_product_update_not_found(api_client):
 
 
 @pytest.mark.django_db
-def test_product_update_invalid(test_data, fix_structure, api_client):
+def test_product_update_invalid(
+        test_data, fix_structure, no_product_register, api_client
+):
     """Update existing product with invalid data."""
-    product = Product.objects.create(**test_data["input"])
+    with no_product_register():
+        product = Product.objects.create(**test_data["input"])
+
     api_response = api_client.put(
         reverse("product-detail", kwargs={"pk": product.id}),
         test_data["change"],
@@ -33,9 +37,11 @@ def test_product_update_invalid(test_data, fix_structure, api_client):
 
 
 @pytest.mark.django_db
-def test_product_update_valid(test_data, api_client):
+def test_product_update_valid(test_data, no_product_register, api_client):
     """Update existing product with valid data."""
-    product = Product.objects.create(**test_data["input"])
+    with no_product_register():
+        product = Product.objects.create(**test_data["input"])
+
     api_response = api_client.put(
         reverse("product-detail", kwargs={"pk": product.id}),
         test_data["change"],
