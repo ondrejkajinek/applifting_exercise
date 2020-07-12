@@ -7,9 +7,9 @@ from django.db.models import Max
 from django.utils import timezone
 
 # local
+from api.product.models import Product, Offer, Price
 from product_aggregator.utils import setup_cron_logger
 from .client import OfferMicroserviceClient
-from .models import Product, Offer, Price
 
 
 log = setup_cron_logger(
