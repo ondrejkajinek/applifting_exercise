@@ -85,7 +85,7 @@ class Offer(models.Model):
 
     def __str__(self):
         """Create printable representation of Offer."""
-        return "{} offer: {!d} items in stock".format(
+        return "{} offer: {:d} items in stock".format(
             self.product, self.items_in_stock
         )
 
