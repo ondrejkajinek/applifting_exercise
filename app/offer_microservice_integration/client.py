@@ -75,7 +75,7 @@ class OfferMicroserviceClient:
             method_params["json"] = params
 
         resp = method(**method_params)
-        if resp.status_code != 201:
+        if resp.status_code // 100 != 2:
             try:
                 exception = EXCEPTIONS[resp.status_code]
                 message = resp.json()["msg"]
