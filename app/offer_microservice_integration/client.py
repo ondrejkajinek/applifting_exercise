@@ -65,9 +65,7 @@ class OfferMicroserviceClient:
 
     def _call_authorized(self, method, resource_path, params=None):
         method_params = {
-            "url": urllib.parse.urljoin(
-                settings.OFFER_MICROSERVICE_URL, resource_path
-            ),
+            "url": settings.OFFER_MICROSERVICE_URL + resource_path,
             "headers": {
                 "Bearer": self.api_key,
             }
@@ -113,7 +111,7 @@ class OfferMicroserviceClient:
         return Configuration.objects.get(key=self.TOKEN_KEY).value
 
     def _request_auth_token(self):
-        url = urllib.parse.urljoin(settings.OFFER_MICROSERVICE_URL, "/auth")
+        url = settings.OFFER_MICROSERVICE_URL + "/auth"
         resp = requests.post(url)
         try:
             resp.raise_for_status()

@@ -137,7 +137,7 @@ REST_FRAMEWORK = {
 }
 
 try:
-    OFFER_MICROSERVICE_URL = os.environ["OFFER_MS_URL"]
+    OFFER_MICROSERVICE_URL = os.environ["OFFER_MS_URL"].rstrip("/")
 except KeyError:
     OFFER_MICROSERVICE_URL = \
         "https://applifting-python-excercise-ms.herokuapp.com/api/v1"
