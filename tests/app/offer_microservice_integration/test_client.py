@@ -7,13 +7,12 @@ from unittest import mock
 import pytest   # pylint: disable=import-error
 
 # local
-from app.offer_microservice_integration import client
-from app.offer_microservice_integration.exceptions import MissingApiKey
+from app.offer_microservice_integration import client, exceptions
 
 
 @pytest.mark.django_db
 @mock.patch.object(client.OfferMicroserviceClient, "_request_auth_token")
-def test_auth_token(mock_request_token, fake_token, oms_client):
+def test_auth_token_once(mock_request_token, fake_token, oms_client):
     """Test if auth token is requested only once."""
     mock_request_token.return_value = fake_token
     for _ in range(10):
@@ -26,23 +25,41 @@ def test_auth_token(mock_request_token, fake_token, oms_client):
 
 
 @pytest.mark.django_db
+@mock.patch.object(client.requests, "post")
+def test_request_token(mock_request_post, oms_client, fake_token):
+    """Test successful auth token request."""
+    mock_request_post.return_value = mock.Mock(**{
+        # "raise_for_status.return_value": True,
+        "json.return_value": {"access_token": fake_token}
+    })
+    assert oms_client.api_key == fake_token
+
+
+@pytest.mark.django_db
 def test_request_token_failed(oms_client):
     """Test various fails during auth token request."""
-    with mock.patch.object(client.requests, "get") as mock_request_get:
-        mock_request_get.return_value = mock.Mock(
-            status_code=500
-        )
-        with pytest.raises(MissingApiKey):
+    with mock.patch.object(client.requests, "post") as mock_request_post:
+        mock_request_post.return_value = mock.Mock(**{
+            "raise_for_status.side_effect":
+                client.requests.exceptions.HTTPError
+        })
+        with pytest.raises(exceptions.MissingApiKey):
             print(oms_client.api_key)
 
-    with mock.patch.object(client.requests, "get") as mock_request_get:
-        message = "I wanna break it"
-        mock_request_get.return_value = mock.Mock(**{
-            "status_code": 200,
-            "text": message,
-            "json.return_value": message
+    with mock.patch.object(client.requests, "post") as mock_request_post:
+        mock_request_post.return_value = mock.Mock(**{
+            "text": "This is mocked error",
+            "json.side_effect": ValueError
         })
-        with pytest.raises(MissingApiKey):
+        with pytest.raises(exceptions.UnrecognizedResponse):
+            print(oms_client.api_key)
+
+    with mock.patch.object(client.requests, "post") as mock_request_post:
+        mock_request_post.return_value = mock.Mock(**{
+            "text": "This is mocked error",
+            "json.side_effect": KeyError
+        })
+        with pytest.raises(exceptions.UnrecognizedResponse):
             print(oms_client.api_key)
 
 
