@@ -10,7 +10,8 @@ from cached_property import cached_property
 from django.conf import settings
 
 # local
-from .exceptions import MissingApiKey
+from .exceptions import BadRequest, MissingApiKey, NotFound
+from .exceptions import ServerError, UnauthorizedRequest, UnrecognizedResponse
 from .models import Configuration
 
 
@@ -18,9 +19,9 @@ log = logging.getLogger("app.offer_microservice_integration.utils")
 
 
 EXCEPTIONS = {
-    400: RuntimeError,
-    401: RuntimeError,
-    404: RuntimeError
+    400: BadRequest,
+    401: UnauthorizedRequest,
+    404: NotFound
 }
 
 
@@ -75,32 +76,38 @@ class OfferMicroserviceClient:
             method_params["json"] = params
 
         resp = method(**method_params)
-        if resp.status_code // 100 != 2:
-            try:
-                exception = EXCEPTIONS[resp.status_code]
-                message = resp.json()["msg"]
-            except (KeyError, ValueError):
-                log.error(
-                    "Unrecongized response from Offer microservice: %d: %s",
-                    resp.status_code, resp.text
-                )
-                # TODO: exception!
-                raise RuntimeError(
-                    "Offer microservice gave unrecognized response"
-                )
-
-            raise exception(message)
+        status_code_group = resp.status_code // 100
+        if status_code_group == 5:
+            log.error("Server error: %s", resp.text)
+            raise ServerError(resp.text)
 
         try:
             response = resp.json()
         except ValueError:
             log.error(
-                "Malformed response from Offer microservice: %r", resp.text
+                "Unrecongized response from Offer microservice: %d: %s",
+                resp.status_code, resp.text
             )
-            # TODO: exception!
-            raise RuntimeError("Offer microservice gave malformed response")
+            raise UnrecognizedResponse(
+                "Offer microservice gave unrecognized response"
+            )
 
-        return response
+        if status_code_group == 2:
+            return response
+
+        try:
+            exception = EXCEPTIONS[resp.status_code]
+            message = response["msg"]
+        except KeyError:
+            log.error(
+                "Unrecongized response from Offer microservice: %d: %s",
+                resp.status_code, resp.text
+            )
+            raise UnrecognizedResponse(
+                "Offer microservice gave unrecognized response"
+            )
+
+        raise exception(message)
 
     def _load_auth_token(self):
         return Configuration.objects.get(key=self.TOKEN_KEY).value
@@ -113,7 +120,7 @@ class OfferMicroserviceClient:
             return resp.json()["access_token"]
         except (KeyError, ValueError):
             log.error("Bad response from Offer MS API: %r", resp.text)
-            raise MissingApiKey("Unexpected response from service")
+            raise UnrecognizedResponse("Unexpected response from service")
         except requests.exceptions.HTTPError:
             log.exception("Failed to request auth token")
             raise MissingApiKey("Auth request failed")
