@@ -29,7 +29,6 @@ def test_auth_token_once(mock_request_token, fake_token, oms_client):
 def test_request_token(mock_request_post, oms_client, fake_token):
     """Test successful auth token request."""
     mock_request_post.return_value = mock.Mock(**{
-        # "raise_for_status.return_value": True,
         "json.return_value": {"access_token": fake_token}
     })
     assert oms_client.api_key == fake_token
