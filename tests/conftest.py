@@ -3,6 +3,7 @@
 # std
 import collections
 import pathlib
+from unittest import mock
 
 # thid-party
 from django.db.models.signals import post_save
@@ -15,6 +16,9 @@ import pytest   # pylint: disable=import-error
 from api.product.models import Offer, Price, Product
 from app.offer_microservice_integration.client import OfferMicroserviceClient
 from app.offer_microservice_integration.signals import register_product
+
+
+FAKE_TOKEN = "this_is_fake_token"
 
 
 class SignalMuter:
@@ -54,7 +58,7 @@ def api_client():
 @pytest.fixture
 def fake_token():
     """Get dummy auth token for Offer microservice API."""
-    return "this_is_fake_token"
+    return FAKE_TOKEN
 
 
 @pytest.fixture
@@ -84,6 +88,17 @@ def fix_structure():
 def oms_client():
     """Create OfferMicroserviceClient."""
     return OfferMicroserviceClient()
+
+
+@pytest.fixture
+def oms_client_with_fake_api_key():
+    """Prepare OfferMicroserviceClient with mocked api key."""
+    with mock.patch.object(
+            OfferMicroserviceClient, "api_key", new_callable=mock.PropertyMock
+    ) as mock_api_key:
+        client = OfferMicroserviceClient()
+        mock_api_key.return_value = FAKE_TOKEN
+        yield client
 
 
 @pytest.fixture

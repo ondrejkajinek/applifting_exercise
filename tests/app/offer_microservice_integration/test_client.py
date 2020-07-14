@@ -84,12 +84,9 @@ def test_api_key_accessed_once(
         assert mock_api_key.call_count == 1
 
 
-@mock.patch.object(
-    client.OfferMicroserviceClient, "api_key", new_callable=mock.PropertyMock
-)
 @mock.patch.object(client.requests, "get")
 def test_product_offers(
-        mock_request_get, mock_api_key, test_data, fake_token, oms_client
+        mock_request_get, test_data, oms_client_with_fake_api_key
 ):
     """Test client response for product_offers."""
     mock_request_get.return_value = mock.Mock(**{
@@ -97,25 +94,29 @@ def test_product_offers(
         "text": "",
         "json.return_value": test_data
     })
-    mock_api_key.return_value = fake_token
-    offers = oms_client.product_offers(1)
+    offers = oms_client_with_fake_api_key.product_offers(1)
     assert offers == test_data
 
 
-@mock.patch.object(
-    client.OfferMicroserviceClient, "api_key", new_callable=mock.PropertyMock
-)
-def test_product_offers_failed(mock_api_key, fake_token, oms_client):
+def test_product_offers_failed(oms_client_with_fake_api_key):
     """Test client response for product_offers error."""
-    mock_api_key.return_value = fake_token
     with mock.patch.object(client.requests, "get") as mock_request_get:
         mock_request_get.return_value = mock.Mock(**{
-            "status_code": 400,
+            "status_code": 200,
+            "text": "This is mocked error",
+            "json.side_effect": ValueError
+        })
+        with pytest.raises(exceptions.UnrecognizedResponse):
+            oms_client_with_fake_api_key.product_offers(1)
+
+    with mock.patch.object(client.requests, "get") as mock_request_get:
+        mock_request_get.return_value = mock.Mock(**{
+            "status_code": 499,
             "text": "This is mocked error",
             "json.return_value": {"msg": "This is mocked error"}
         })
-        with pytest.raises(exceptions.BadRequest):
-            oms_client.product_offers(1)
+        with pytest.raises(exceptions.UnrecognizedResponse):
+            oms_client_with_fake_api_key.product_offers(1)
 
     with mock.patch.object(client.requests, "get") as mock_request_get:
         mock_request_get.return_value = mock.Mock(**{
@@ -124,7 +125,7 @@ def test_product_offers_failed(mock_api_key, fake_token, oms_client):
             "json.return_value": {"msg": "This is mocked error"}
         })
         with pytest.raises(exceptions.UnauthorizedRequest):
-            oms_client.product_offers(1)
+            oms_client_with_fake_api_key.product_offers(1)
 
     with mock.patch.object(client.requests, "get") as mock_request_get:
         mock_request_get.return_value = mock.Mock(**{
@@ -133,7 +134,7 @@ def test_product_offers_failed(mock_api_key, fake_token, oms_client):
             "json.return_value": {"msg": "This is mocked error"}
         })
         with pytest.raises(exceptions.NotFound):
-            oms_client.product_offers(1)
+            oms_client_with_fake_api_key.product_offers(1)
 
     with mock.patch.object(client.requests, "get") as mock_request_get:
         mock_request_get.return_value = mock.Mock(**{
@@ -142,4 +143,4 @@ def test_product_offers_failed(mock_api_key, fake_token, oms_client):
             "json.return_value": {"msg": "This is mocked error"}
         })
         with pytest.raises(exceptions.ServerError):
-            oms_client.product_offers(1)
+            oms_client_with_fake_api_key.product_offers(1)
