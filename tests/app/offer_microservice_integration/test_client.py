@@ -111,10 +111,11 @@ def test_product_offers(
 
 def test_product_offers_failed(oms_client_with_fake_api_key):
     """Test client response for product_offers error."""
+    message = "This is mocked error"
     with mock.patch.object(client.requests, "get") as mock_request_get:
         mock_request_get.return_value = mock.Mock(**{
             "status_code": 200,
-            "text": "This is mocked error",
+            "text": message,
             "json.side_effect": ValueError
         })
         with pytest.raises(exceptions.UnrecognizedResponse):
@@ -123,38 +124,42 @@ def test_product_offers_failed(oms_client_with_fake_api_key):
     with mock.patch.object(client.requests, "get") as mock_request_get:
         mock_request_get.return_value = mock.Mock(**{
             "status_code": 499,
-            "text": "This is mocked error",
-            "json.return_value": {"msg": "This is mocked error"}
+            "text": message,
+            "json.return_value": {"msg": message}
         })
-        with pytest.raises(exceptions.UnrecognizedResponse):
+        with pytest.raises(exceptions.UnrecognizedResponse) as exc:
             oms_client_with_fake_api_key.product_offers(1)
+            assert str(exc.value) == message
 
     with mock.patch.object(client.requests, "get") as mock_request_get:
         mock_request_get.return_value = mock.Mock(**{
             "status_code": 401,
-            "text": "This is mocked error",
-            "json.return_value": {"msg": "This is mocked error"}
+            "text": message,
+            "json.return_value": {"msg": message}
         })
-        with pytest.raises(exceptions.UnauthorizedRequest):
+        with pytest.raises(exceptions.UnauthorizedRequest) as exc:
             oms_client_with_fake_api_key.product_offers(1)
+            assert str(exc.value) == message
 
     with mock.patch.object(client.requests, "get") as mock_request_get:
         mock_request_get.return_value = mock.Mock(**{
             "status_code": 404,
-            "text": "This is mocked error",
-            "json.return_value": {"msg": "This is mocked error"}
+            "text": message,
+            "json.return_value": {"msg": message}
         })
-        with pytest.raises(exceptions.NotFound):
+        with pytest.raises(exceptions.NotFound) as exc:
             oms_client_with_fake_api_key.product_offers(1)
+            assert str(exc.value) == message
 
     with mock.patch.object(client.requests, "get") as mock_request_get:
         mock_request_get.return_value = mock.Mock(**{
             "status_code": 500,
-            "text": "This is mocked error",
-            "json.return_value": {"msg": "This is mocked error"}
+            "text": message,
+            "json.return_value": {"msg": message}
         })
-        with pytest.raises(exceptions.ServerError):
+        with pytest.raises(exceptions.ServerError) as exc:
             oms_client_with_fake_api_key.product_offers(1)
+            assert str(exc.value) == message
 
 
 @mock.patch.object(client.requests, "post")
