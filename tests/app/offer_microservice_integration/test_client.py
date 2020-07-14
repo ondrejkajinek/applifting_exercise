@@ -4,9 +4,11 @@
 from unittest import mock
 
 # third-party
+from django.conf import settings
 import pytest   # pylint: disable=import-error
 
 # local
+from api.product.models import Product
 from app.offer_microservice_integration import client, exceptions
 
 
@@ -95,6 +97,16 @@ def test_product_offers(
     })
     offers = oms_client_with_fake_api_key.product_offers(1)
     assert offers == test_data
+    mock_request_get.assert_called_with(
+        url=settings.OFFER_MICROSERVICE_URL + "/products/{}/offers".format(1),
+        headers={
+            "Bearer": oms_client_with_fake_api_key.api_key
+        }
+    )
+    try:
+        mock_request_get.assert_called_once()
+    except AttributeError:
+        assert mock_request_get.call_count == 1
 
 
 def test_product_offers_failed(oms_client_with_fake_api_key):
@@ -143,3 +155,32 @@ def test_product_offers_failed(oms_client_with_fake_api_key):
         })
         with pytest.raises(exceptions.ServerError):
             oms_client_with_fake_api_key.product_offers(1)
+
+
+@mock.patch.object(client.requests, "post")
+def test_register_product(
+        mock_request_post, test_data, oms_client_with_fake_api_key
+):
+    """Test client response for register_product."""
+    expected_result = {
+        "id": test_data["id"]
+    }
+    mock_request_post.return_value = mock.Mock(**{
+        "status_code": 201,
+        "text": "",
+        "json.return_value": expected_result
+    })
+    product = Product(**test_data)
+    response = oms_client_with_fake_api_key.register_product(product)
+    assert response == expected_result
+    mock_request_post.assert_called_with(
+        url=settings.OFFER_MICROSERVICE_URL + "/products/register",
+        headers={
+            "Bearer": oms_client_with_fake_api_key.api_key
+        },
+        json=test_data
+    )
+    try:
+        mock_request_post.assert_called_once()
+    except AttributeError:
+        assert mock_request_post.call_count == 1
