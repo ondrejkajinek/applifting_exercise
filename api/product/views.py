@@ -58,8 +58,8 @@ class OfferViewSet(viewsets.GenericViewSet):
     Price history endpoint.
 
     Supports:
-        history: GET /api/price/history/
-        changes: GET /api/price/changes/
+        history: GET /api/offer/{id}/history/
+        changes: GET /api/offer/{id}/changes/
     """
 
     queryset = Offer.objects.prefetched()
