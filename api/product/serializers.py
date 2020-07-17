@@ -50,7 +50,7 @@ class OfferSerializer(serializers.ModelSerializer):
         """Serializer configuration."""
 
         model = Offer
-        fields = ["price", "items_in_stock"]
+        fields = ["id", "price", "items_in_stock"]
 
     def get_price(self, offer):     # pylint: disable=no-self-use
         """Get current price for Offer."""
@@ -68,4 +68,4 @@ class ProductSerializer(serializers.ModelSerializer):
         """Serializer configuration."""
 
         model = Product
-        fields = ["name", "description", "offers"]
+        fields = ["id", "name", "description", "offers"]

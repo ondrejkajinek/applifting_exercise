@@ -32,10 +32,12 @@
 -
     input:
         -
+            id: 2
             name: "Test 3"
             description: "Description 3"
             offers:
                 -
+                    id: 12
                     external_id: 1
                     items_in_stock: 1000
                     prices: 
@@ -49,6 +51,7 @@
                             price: 13
 
                 -
+                    id: 22
                     external_id: 2
                     items_in_stock: 300
                     prices:
@@ -61,6 +64,7 @@
                             timestamp_to: null
                             price: 13
                 -
+                    id: 23
                     external_id: 3
                     items_in_stock: 0
                     prices:
@@ -71,15 +75,19 @@
 
     output:
         -
+            id: 2
             name: "Test 3"
             description: "Description 3"
             offers:
                 -
+                    id: 12
                     items_in_stock: 1000
                     price: 13
                 -
+                    id: 22
                     items_in_stock: 300
                     price: 12
                 -
+                    id: 23
                     items_in_stock: 0
                     price: 12
