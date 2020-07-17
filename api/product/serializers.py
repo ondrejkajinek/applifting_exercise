@@ -1,8 +1,6 @@
 """API serializers for Product app."""
 
 # third-party
-from django.db.models import Q
-from django.utils import timezone
 from rest_framework import serializers
 
 # local

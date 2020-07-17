@@ -2,7 +2,6 @@
 
 # std
 import logging
-import urllib.parse
 
 # third-party
 import requests

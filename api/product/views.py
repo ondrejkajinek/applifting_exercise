@@ -1,8 +1,6 @@
 """Views for Product api."""
 
 # third-party
-# from django.http import JsonResponse, Http404
-from django.http import Http404
 from django.db.models import Q
 from django.utils import timezone
 from rest_framework import decorators, status, viewsets
