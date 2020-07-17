@@ -108,9 +108,11 @@ def product_factory():
     def factory(product_data):
         offer_data_set = product_data.pop("offers")
         product = Product.objects.create(**product_data)
+        product_data["offers"] = offer_data_set
         for offer_data in offer_data_set:
             price_data_set = offer_data.pop("prices")
             offer = Offer.objects.create(product=product, **offer_data)
+            offer_data["prices"] = price_data_set
             for price_data in price_data_set:
                 Price.objects.create(offer=offer, **price_data)
 
