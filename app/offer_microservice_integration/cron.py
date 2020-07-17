@@ -53,10 +53,10 @@ def _process_offer(product, offer):
         _create_offer(product, offer)
 
 
-def _update_offer(offer):
+def _update_offer(offer_data):
     with transaction.atomic():
-        offer = Offer.objects.prefetched().get(external_id=offer["id"])
-        offer.items_in_stock = offer["items_in_stock"]
+        offer = Offer.objects.prefetched().get(external_id=offer_data["id"])
+        offer.items_in_stock = offer_data["items_in_stock"]
         offer.save()
 
         try:
@@ -70,11 +70,11 @@ def _update_offer(offer):
             Price.objects.create(
                 # if no Price exists, max_timestamp_to is None
                 timestamp_from=max_timestamp_to or 0,
-                price=offer["price"],
+                price=offer_data["price"],
                 offer=offer
             )
         else:
-            if current_price.price != offer["price"]:
+            if current_price.price != offer_data["price"]:
                 # stop old price
                 current_timestamp = int(timezone.now().timestamp())
                 current_price.timestamp_to = current_timestamp
@@ -83,7 +83,7 @@ def _update_offer(offer):
                 # create new one
                 Price.objects.create(
                     timestamp_from=current_timestamp,
-                    price=offer["price"],
+                    price=offer_data["price"],
                     offer=offer
                 )
             # price didn't changed, do nothing
