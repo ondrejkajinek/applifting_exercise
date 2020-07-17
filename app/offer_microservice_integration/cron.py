@@ -32,16 +32,16 @@ def update_offers():
                 )
 
 
-def _create_offer(product, offer):
+def _create_offer(product, offer_data):
     with transaction.atomic():
         offer = Offer.objects.create(
-            external_id=offer["id"],
-            items_in_stock=offer["items_in_stock"],
+            external_id=offer_data["id"],
+            items_in_stock=offer_data["items_in_stock"],
             product=product
         )
         Price.objects.create(
             timestamp_from=0,
-            price=offer["price"],
+            price=offer_data["price"],
             offer=offer
         )
 
