@@ -47,9 +47,10 @@ class ProductViewSet(viewsets.ModelViewSet):
         product_data["id"] = created.pk
         return Response(product_data, status=status.HTTP_201_CREATED)
 
-    def update(self, request, pk=None):
+    def update(self, *args, **kwargs):
         """Handle for PUT /api/product/{id}/."""
-        return super().update(request, pk, partial=True)
+        kwargs["partial"] = True
+        return super().update(*args, **kwargs)  # pylint: disable=no-member
 
 
 class OfferViewSet(viewsets.GenericViewSet):
@@ -109,5 +110,4 @@ class OfferViewSet(viewsets.GenericViewSet):
 
         serializer = PriceChangeSerializer(prices, many=True)
         return Response(serializer.data)
-
 # pylint: enable=too-many-ancestors
