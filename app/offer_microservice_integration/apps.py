@@ -1,5 +1,8 @@
 """Django app module for Offer microservice integration."""
 
+# std
+import importlib
+
 # third-party
 from django.apps import AppConfig
 
@@ -12,4 +15,4 @@ class MicroserviceIntegrationConfig(AppConfig):
     def ready(self):
         """Import app signals."""
         super().ready()
-        from . import signals
+        importlib.import_module(".signals", self.name)
