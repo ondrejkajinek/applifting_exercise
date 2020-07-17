@@ -110,7 +110,7 @@ class OfferMicroserviceClient:
     def _load_auth_token(self):
         return Configuration.objects.get(key=self.TOKEN_KEY).value
 
-    def _request_auth_token(self):
+    def _request_auth_token(self):  # pylint: disable=no-self-use
         url = settings.OFFER_MICROSERVICE_URL + "/auth"
         resp = requests.post(url)
         try:

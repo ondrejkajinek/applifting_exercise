@@ -14,6 +14,7 @@ from .serializers import PriceChangeSerializer, PriceSerializer
 from .serializers import ProductSerializer
 
 
+# pylint: disable=too-many-ancestors
 class ProductViewSet(viewsets.ModelViewSet):
     """
     Product endpoints.
@@ -37,7 +38,9 @@ class ProductViewSet(viewsets.ModelViewSet):
             else super().get_queryset()
         )
 
-    def create(self, request):
+    # pylint: disable=unused-argument
+    def create(self, request, *args, **kwargs):
+        # pylint: enable=unused-argument
         """Handle for POST /api/product/."""
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -64,7 +67,9 @@ class OfferViewSet(viewsets.GenericViewSet):
     serializer_class = PriceSerializer
 
     @decorators.action(detail=True, methods=["GET"])
-    def history(self, request, pk=None):
+    # pylint: disable=unused-argument
+    def history(self, *args, **kwargs):
+        # pylint: enable=unused-argument
         """Handle for GET /api/price/history/."""
         offer = self.get_object()
         prices = offer.prices.all()
@@ -72,7 +77,9 @@ class OfferViewSet(viewsets.GenericViewSet):
         return Response(serializer.data)
 
     @decorators.action(detail=True, methods=["GET"])
-    def changes(self, request, pk=None):
+    # pylint: disable=unused-argument
+    def changes(self, request, *args, **kwargs):
+        # pylint: enable=unused-argument
         """Handle for GET /api/price/changes/."""
         try:
             time_from = int(request.query_params.get("time_from") or 0)
@@ -104,3 +111,5 @@ class OfferViewSet(viewsets.GenericViewSet):
 
         serializer = PriceChangeSerializer(prices, many=True)
         return Response(serializer.data)
+
+# pylint: enable=too-many-ancestors

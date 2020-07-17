@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 
-class ProductManager(models.Manager):
+class ProductManager(models.Manager):  # pylint: disable=too-few-public-methods
     """Manager for prefetched Products."""
 
     def prefetched(self):
@@ -20,7 +20,7 @@ class ProductManager(models.Manager):
         )
 
 
-class OfferManager(models.Manager):
+class OfferManager(models.Manager):  # pylint: disable=too-few-public-methods
     """Manager for prefetched Offers."""
 
     def prefetched(self):
@@ -31,7 +31,7 @@ class OfferManager(models.Manager):
         )
 
 
-class PriceManager(models.Manager):
+class PriceManager(models.Manager):  # pylint: disable=too-few-public-methods
     """Manager for Price."""
 
     def current(self):
@@ -47,7 +47,7 @@ class PriceManager(models.Manager):
         )
 
 
-class Product(models.Model):
+class Product(models.Model):    # pylint: disable=too-few-public-methods
     """Real world products you can buy."""
 
     name = models.CharField(
@@ -65,7 +65,7 @@ class Product(models.Model):
         return str(self.name)
 
 
-class Offer(models.Model):
+class Offer(models.Model):  # pylint: disable=too-few-public-methods
     """Offer representing a product being offered for some price somewhere."""
 
     external_id = models.IntegerField(
@@ -90,7 +90,7 @@ class Offer(models.Model):
         )
 
 
-class Price(models.Model):
+class Price(models.Model):  # pylint: disable=too-few-public-methods
     """Price for offer that is valid in some time period."""
 
     timestamp_from = models.PositiveIntegerField(

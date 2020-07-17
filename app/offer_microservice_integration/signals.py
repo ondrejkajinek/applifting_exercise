@@ -8,6 +8,7 @@ from api.product.models import Product
 from .client import OfferMicroserviceClient
 
 
+# pylint: disable=unused-argument
 def register_product(instance, created, **kwargs):
     """Register product to Offer microservice."""
     if not created:
@@ -15,6 +16,7 @@ def register_product(instance, created, **kwargs):
 
     client = OfferMicroserviceClient()
     client.register_product(instance)
+# pylint: enable=unused-argument
 
 
 post_save.connect(
