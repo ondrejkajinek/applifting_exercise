@@ -1,0 +1,119 @@
+-
+    input:
+        name: "Name"
+        description: "Description"
+        offers:
+            -
+                external_id: 16
+                items_in_stock: 89
+                prices:
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 45
+                        price: 25
+                    -
+                        timestamp_from: 45
+                        timestamp_to: 800
+                        price: 23
+                    -
+                        timestamp_from: 800
+                        timestamp_to: null
+                        price: 22
+            -
+                external_id: 20
+                items_in_stock: 200
+                prices:
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 200
+                        price: 20
+                    -
+                        timestamp_from: 200
+                        timestamp_to: 500
+                        price: 21
+                    -
+                        timestamp_from: 500
+                        timestamp_to: null
+                        price: 22
+        new_offer:
+            id: 20
+            items_in_stock: 170
+            price: 22
+    output:
+        new_prices:
+            -
+                timestamp_from: 0
+                timestamp_to: 200
+                price: 20
+            -
+                timestamp_from: 200
+                timestamp_to: 500
+                price: 21
+            -
+                timestamp_from: 500
+                timestamp_to: null
+                price: 22
+
+    timestamp: 900
+    
+-
+    input:
+        name: "Name"
+        description: "Description"
+        offers:
+            -
+                external_id: 16
+                items_in_stock: 89
+                prices:
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 45
+                        price: 25
+                    -
+                        timestamp_from: 45
+                        timestamp_to: 800
+                        price: 23
+                    -
+                        timestamp_from: 800
+                        timestamp_to: null
+                        price: 22
+            -
+                external_id: 20
+                items_in_stock: 200
+                prices:
+                    -
+                        timestamp_from: 0
+                        timestamp_to: 200
+                        price: 20
+                    -
+                        timestamp_from: 200
+                        timestamp_to: 500
+                        price: 21
+                    -
+                        timestamp_from: 500
+                        timestamp_to: null
+                        price: 22
+        new_offer:
+            id: 16
+            items_in_stock: 170
+            price: 24
+    output:
+        new_prices:
+            -
+                timestamp_from: 0
+                timestamp_to: 45
+                price: 25
+            -
+                timestamp_from: 45
+                timestamp_to: 800
+                price: 23
+            -
+                timestamp_from: 800
+                timestamp_to: 801
+                price: 22
+            -
+                timestamp_from: 801
+                timestamp_to: null
+                price: 24
+
+    timestamp: 801

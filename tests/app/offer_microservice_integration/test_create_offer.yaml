@@ -1,0 +1,13 @@
+-
+    input:
+        name: "N"
+        description: "D"
+        offer:
+            id: 11
+            items_in_stock: 1000
+            price: 100
+
+    output:
+        id: 11
+        items_in_stock: 1000
+        price: 100

@@ -1,0 +1,15 @@
+-
+    name: "N"
+    description: "D"
+    offer:
+        id: 432
+        items_in_stock: 54
+        price:  "This will cause a failure"
+
+-
+    name: "N"
+    description: "D"
+    offer:
+        id: 432
+        items_in_stock: 54
+        # price is missing, this will also cause a failure
