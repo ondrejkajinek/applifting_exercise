@@ -1,5 +1,8 @@
 """Cronjobs for Offer microservice integration app."""
 
+# std
+import time
+
 # third-party
 from django.conf import settings
 from django.db import transaction
@@ -20,6 +23,8 @@ log = setup_cron_logger(
 
 def update_offers():
     """Update stock count and price for all offers, get new offers."""
+    start = time.perf_counter_ns()
+    log.info("Starting cronjob 'update_offer'")
     client = OfferMicroserviceClient()
     for product in Product.objects.all():
         for offer in client.product_offers(product.id):
@@ -30,6 +35,12 @@ def update_offers():
                     "Product %d (%s): failed to update / create offer %r",
                     product.id, product, offer
                 )
+
+    end = time.perf_counter_ns()
+    log.info(
+        "Cronjob 'update_offers' finished, it took %.6f ms",
+        (end - start) / 1000000
+    )
 
 
 def _create_offer(product, offer_data):
