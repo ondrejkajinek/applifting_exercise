@@ -108,18 +108,7 @@ Response: list of products, where product looks like
 {
 	"id": integer,
 	"name": string,
-	"description": string,
-	"offers": list-of-offers
-}
-```
-
-Offer:
-
-```
-{
-	"id": integer,
-	"price": integer,
-	"items_in_stock": integer
+	"description": string
 }
 ```
 
@@ -145,8 +134,7 @@ Response (201): Detail of created product
 {
 	"id": integer,
 	"name": string,
-	"description": string,
-	"offers": []
+	"description": string
 }
 ```
 
@@ -167,7 +155,7 @@ Status codes:
 - 200: OK
 - 404: Not found
 
-Response: Product detail
+Response (200): Product detail
 
 ```
 	"id": integer,
@@ -176,7 +164,15 @@ Response: Product detail
 	"offers": list-of-offers
 ```
 
-Offer has the same format as in GET /api/product/.
+Offer:
+
+```
+{
+	"id": integer,
+	"price": integer,
+	"items_in_stock": integer
+}
+```
 
 
 ## PUT /api/project/{id}/
@@ -203,8 +199,7 @@ Response (201): Detail of created product
 {
 	"id": integer,
 	"name": string,
-	"description": string,
-	"offers": []
+	"description": string
 }
 ```
 
