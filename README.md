@@ -164,6 +164,14 @@ Response (200): Product detail
 	"offers": list-of-offers
 ```
 
+Response (404): Not found
+
+```
+{
+  "detail": "Not found."
+}
+```
+
 Offer:
 
 ```
@@ -212,6 +220,14 @@ Response (400): Description of error
 }
 ```
 
+Response (404): Not found
+
+```
+{
+  "detail": "Not found."
+}
+```
+
 
 ## DELETE /api/project/{id}/
 Updates product. It is not neccessary to send all parameters in request body. Omitted parameters will not be updated by this method.
@@ -230,6 +246,14 @@ Status codes:
 - 204: No Content
 - 404: Not found
 
+Response (404): Not found
+
+```
+{
+  "detail": "Not found."
+}
+```
+
 
 ## GET /api/offer/{id}/history/
 Returns the history of price changes throughout the time.
@@ -239,7 +263,7 @@ Status codes:
 - 200: OK
 - 404: Not found
 
-Response body:
+Response (200): List of offer prices
 
 ```
 [
@@ -250,6 +274,14 @@ Response body:
 	},
 	...
 ]
+```
+
+Response (404): Not found
+
+```
+{
+  "detail": "Not found."
+}
 ```
 
 Only the latest price can have `timestamp_to` equal to `null`. Prices are ordered from the current to the oldest one.
@@ -263,7 +295,7 @@ Status codes:
 - 200: OK
 - 404: Not found
 
-Response body:
+Response (200): List of offer price changes
 
 ```
 [
@@ -274,6 +306,14 @@ Response body:
 	},
 	...
 ]
+```
+
+Response (404): Not found
+
+```
+{
+  "detail": "Not found."
+}
 ```
 
 Only the latest price can have `timestamp_to` equal to `null`. Changes are ordered from the oldest to the current one. The `change` is a relative shift of price with respect to the current price (which will always have `change` equal to zero).
