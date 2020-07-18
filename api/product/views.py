@@ -9,7 +9,7 @@ from rest_framework.response import Response
 # local
 from .models import Offer, Product
 from .serializers import PriceChangeSerializer, PriceSerializer
-from .serializers import ProductSerializer
+from .serializers import ProductDetailSerializer, ProductSerializer
 
 
 # pylint: disable=too-many-ancestors
@@ -34,6 +34,14 @@ class ProductViewSet(viewsets.ModelViewSet):
             Product.objects
             if self.action in ("update", "destroy")
             else super().get_queryset()
+        )
+
+    def get_serializer_class(self):
+        """Get special serializer for retrieve action."""
+        return (
+            ProductDetailSerializer
+            if self.action == "retrieve"
+            else super().get_serializer_class()
         )
 
     # pylint: disable=unused-argument

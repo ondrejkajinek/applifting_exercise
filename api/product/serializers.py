@@ -58,9 +58,9 @@ class OfferSerializer(serializers.ModelSerializer):
 
 
 # pylint: disable=too-few-public-methods
-class ProductSerializer(serializers.ModelSerializer):
+class ProductDetailSerializer(serializers.ModelSerializer):
     # pylint: enable=too-few-public-methods
-    """Serializer for Product entity."""
+    """Detail serializer for Product entity."""
 
     offers = OfferSerializer(read_only=True, many=True)
 
@@ -69,3 +69,15 @@ class ProductSerializer(serializers.ModelSerializer):
 
         model = Product
         fields = ["id", "name", "description", "offers"]
+
+
+# pylint: disable=too-few-public-methods
+class ProductSerializer(serializers.ModelSerializer):
+    # pylint: enable=too-few-public-methods
+    """Serializer for Product entity."""
+
+    class Meta:     # pylint: disable=too-few-public-methods
+        """Serializer configuration."""
+
+        model = Product
+        fields = ["id", "name", "description"]

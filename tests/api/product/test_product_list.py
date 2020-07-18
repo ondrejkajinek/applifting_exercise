@@ -11,9 +11,6 @@ def test_product_list(
 ):
     """List products."""
     def sort_products(products):
-        for product in products:
-            product["offers"].sort(key=lambda x: x["id"])
-
         return sorted(products, key=lambda x: x["id"])
 
     if test_data["input"]:
