@@ -1,7 +1,7 @@
 """Views for Product api."""
 
 # third-party
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.utils import timezone
 from rest_framework import decorators, status, viewsets
 from rest_framework.response import Response
@@ -25,14 +25,14 @@ class ProductViewSet(viewsets.ModelViewSet):
         delete: DELETE /api/product/{id}/
     """
 
-    queryset = Product.objects.prefetched()
+    queryset = Product.objects
     serializer_class = ProductSerializer
 
     def get_queryset(self):
         """Get non-prefetched queryset for update and destroy actions."""
         return (
-            Product.objects
-            if self.action in ("update", "destroy")
+            Product.objects.prefetched()
+            if self.action == "retrieve"
             else super().get_queryset()
         )
 
@@ -43,6 +43,15 @@ class ProductViewSet(viewsets.ModelViewSet):
             if self.action == "retrieve"
             else super().get_serializer_class()
         )
+
+    def list(self, *args, **kwargs):    # pylint: disable=unused-argument
+        """Handle for GET /api/product/."""
+        queryset = (
+            self.get_queryset()
+            .annotate(prices_count=Count("offers__prices"))
+            .filter(prices_count__gt=0)
+        )
+        return Response(queryset.values("id", "name", "description"))
 
     # pylint: disable=unused-argument
     def create(self, request, *args, **kwargs):
