@@ -32,7 +32,7 @@ class PriceChangeSerializer(serializers.ModelSerializer):
         """Serializer configuration."""
 
         model = Price
-        fields = ["change", "timestamp_to", "timestamp_from"]
+        fields = ["price", "change", "timestamp_to", "timestamp_from"]
 
     def get_change(self, price):    # pylint: disable=no-self-use
         """Get relative price change."""

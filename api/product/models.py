@@ -114,7 +114,7 @@ class Price(models.Model):  # pylint: disable=too-few-public-methods
     class Meta:     # pylint: disable=too-few-public-methods
         """Model configuration."""
 
-        ordering = ["-timestamp_from"]
+        ordering = ["timestamp_from"]
 
     def __str__(self):
         """Create printable representation of Price."""

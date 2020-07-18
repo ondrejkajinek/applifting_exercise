@@ -23,24 +23,27 @@
                         timestamp_from: 500
                         timestamp_to: null
                         price: 145
-    # price is sorted by timestamp_from descending
     output:
-        -
-            timestamp_from: 500
-            timestamp_to: null
-            change: 0.45
-        -
-            timestamp_from: 200
-            timestamp_to: 500
-            change: 0.3
-        -
-            timestamp_from: 100
-            timestamp_to: 200
-            change: -0.2
         -
             timestamp_from: 0
             timestamp_to: 100
+            price: 100
             change: 0.0
+        -
+            timestamp_from: 100
+            timestamp_to: 200
+            price: 80
+            change: -0.2
+        -
+            timestamp_from: 200
+            timestamp_to: 500
+            price: 130
+            change: 0.3
+        -
+            timestamp_from: 500
+            timestamp_to: null
+            price: 145
+            change: 0.45
 
 -
     input:
@@ -69,20 +72,22 @@
                         price: 145
     query_params:
         time_from: 150
-    # price is sorted by timestamp_from descending
     output:
-        -
-            timestamp_from: 500
-            timestamp_to: null
-            change: 0.45
-        -
-            timestamp_from: 200
-            timestamp_to: 500
-            change: 0.3
         -
             timestamp_from: 100
             timestamp_to: 200
+            price: 100
             change: 0.0
+        -
+            timestamp_from: 200
+            timestamp_to: 500
+            price: 130
+            change: 0.3
+        -
+            timestamp_from: 500
+            timestamp_to: null
+            price: 145
+            change: 0.45
 
 -
     input:
@@ -111,20 +116,22 @@
                         price: 145
     query_params:
         time_to: 300
-    # price is sorted by timestamp_from descending
     output:
-        -
-            timestamp_from: 200
-            timestamp_to: 500
-            change: 0.3
-        -
-            timestamp_from: 100
-            timestamp_to: 200
-            change: -0.2
         -
             timestamp_from: 0
             timestamp_to: 100
+            price: 100
             change: 0.0
+        -
+            timestamp_from: 100
+            timestamp_to: 200
+            price: 80
+            change: -0.2
+        -
+            timestamp_from: 200
+            timestamp_to: 500
+            price: 130
+            change: 0.3
 
 -
     input:
@@ -154,13 +161,14 @@
     query_params:
         time_from: 120
         time_to: 500
-    # price is sorted by timestamp_from descending
     output:
-        -
-            timestamp_from: 200
-            timestamp_to: 500
-            change: 0.3
         -
             timestamp_from: 100
             timestamp_to: 200
+            price: 100
             change: 0.0
+        -
+            timestamp_from: 200
+            timestamp_to: 500
+            price: 130
+            change: 0.3

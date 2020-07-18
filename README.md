@@ -255,38 +255,6 @@ Response (404): Not found
 ```
 
 
-## GET /api/offer/{id}/history/
-Returns the history of price changes throughout the time.
-
-Status codes:
-
-- 200: OK
-- 404: Not found
-
-Response (200): List of offer prices
-
-```
-[
-	{
-		"price": integer,
-		"timestamp_to": integer on null,
-		"timestamp_from": integer
-	},
-	...
-]
-```
-
-Response (404): Not found
-
-```
-{
-  "detail": "Not found."
-}
-```
-
-Only the latest price can have `timestamp_to` equal to `null`. Prices are ordered from the current to the oldest one.
-
-
 ## GET /api/offer/{id}/changes/
 Returns the changes in offer prices throughout the time.
 
@@ -300,6 +268,7 @@ Response (200): List of offer price changes
 ```
 [
 	{
+		"price": integer,
 		"change": float,
 		"timestamp_to": integer on null,
 		"timestamp_from": integer

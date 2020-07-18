@@ -75,22 +75,11 @@ class OfferViewSet(viewsets.GenericViewSet):
     Price history endpoint.
 
     Supports:
-        history: GET /api/offer/{id}/history/
         changes: GET /api/offer/{id}/changes/
     """
 
     queryset = Offer.objects.prefetched()
     serializer_class = PriceSerializer
-
-    @decorators.action(detail=True, methods=["GET"])
-    # pylint: disable=unused-argument
-    def history(self, *args, **kwargs):
-        # pylint: enable=unused-argument
-        """Handle for GET /api/price/history/."""
-        offer = self.get_object()
-        prices = offer.prices.all()
-        serializer = self.get_serializer(prices, many=True)
-        return Response(serializer.data)
 
     @decorators.action(detail=True, methods=["GET"])
     # pylint: disable=unused-argument
@@ -121,7 +110,7 @@ class OfferViewSet(viewsets.GenericViewSet):
                 Q(timestamp_to__isnull=True)
             )
         )
-        base_price = prices.last().price
+        base_price = prices.first().price
         for price in prices:
             price.base_price = base_price
 

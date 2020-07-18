@@ -23,12 +23,11 @@
         offers:
             -
                 str: "Product no. 1 offer: 10 items in stock"
-                # prices are in reverted order
                 prices:
                     -
-                        str: "Product no. 1 offer: 10 items in stock price: 11"
-                    -
                         str: "Product no. 1 offer: 10 items in stock price: 23"
+                    -
+                        str: "Product no. 1 offer: 10 items in stock price: 11"
 
 -
     input:
@@ -50,7 +49,6 @@
         offers:
             -
                 str: "Product no. 42 offer: 42 items in stock"
-                # prices are in reverted order
                 prices:
                     -
                         str: "Product no. 42 offer: 42 items in stock price: 4242"
