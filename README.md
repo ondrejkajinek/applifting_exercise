@@ -285,7 +285,7 @@ Response (404): Not found
 }
 ```
 
-Only the latest price can have `timestamp_to` equal to `null`. Changes are ordered from the oldest to the current one. The `change` is a relative shift of price with respect to the current price (which will always have `change` equal to zero).
+Only the latest price can have `timestamp_to` equal to `null`. Changes are ordered from the oldest to the current one. The `change` is a relative shift of price with respect to the oldest price (which will always have `change` equal to zero).
 
 
 
