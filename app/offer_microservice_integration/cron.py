@@ -21,9 +21,17 @@ log = setup_cron_logger(
 )
 
 
+try:
+    TIMER = time.perf_counter_ns
+    TIMER_MULTIPLIER = 1e-6
+except AttributeError:
+    TIMER = time.perf_counter
+    TIMER_MULTIPLIER = 1000
+
+
 def update_offers():
     """Update stock count and price for all offers, get new offers."""
-    start = time.perf_counter_ns()
+    start = TIMER()
     log.info("Starting cronjob 'update_offer'")
     client = OfferMicroserviceClient()
     for product in Product.objects.all():
@@ -36,10 +44,10 @@ def update_offers():
                     product.id, product, offer
                 )
 
-    end = time.perf_counter_ns()
+    end = TIMER()
     log.info(
         "Cronjob 'update_offers' finished, it took %.6f ms",
-        (end - start) / 1000000
+        TIMER_MULTIPLIER * (end - start)
     )
 
 
